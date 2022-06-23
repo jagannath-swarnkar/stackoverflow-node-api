@@ -134,7 +134,8 @@ const getAllUsers = (_req, _res) => __awaiter(void 0, void 0, void 0, function* 
                 ] });
         }
         const count = yield Users_1.default.find(query).count();
-        const result = yield Users_1.default.find(query).skip(payload.skip).limit(payload.limit).select("-__v");
+        const result = yield Users_1.default.find(query).skip(payload.skip).limit(payload.limit)
+            .select("firstname lastname username email profilePic");
         if (!result || !result.length) {
             return _res.status(204).json({
                 message: "No Data Found!",

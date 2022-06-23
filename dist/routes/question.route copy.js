@@ -11,5 +11,6 @@ router.post("/", [AuthGuard_1.AuthGuard], question_1.addNewQuestion);
 router.get("/", [AuthGuard_1.AuthGuard], question_1.getAllQuestions);
 router.get("/:id", [AuthGuard_1.AuthGuard], question_1.getQuestionById);
 router.post("/:id", [AuthGuard_1.AuthGuard], question_1.addNewAnswer);
+router.post("/vote/:id", [AuthGuard_1.AuthGuard], question_1.voteQuestion);
 exports.default = router;
 //# sourceMappingURL=question.route%20copy.js.map

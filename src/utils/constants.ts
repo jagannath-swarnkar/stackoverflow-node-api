@@ -1,4 +1,4 @@
-export const slotTiming:any = {
+export const slotTiming: any = {
     "1": "9AM - 10AM",
     "2": "10AM - 11AM",
     "3": "11AM - 12PM",
@@ -11,4 +11,7 @@ export const slotTiming:any = {
     "10": "6PM - 7PM",
     "11": "7PM - 8PM",
     "12": "8PM - 9PM",
-}
+};
+
+export type IBlogStatus = "ACTIVE" | "PENDING" | "REJECTED" | "DELETED";
+export const BlogStatus = { ACTIVE: "ACTIVE", PENDING: "PENDING", REJECTED: "REJECTED", DELETED: "DELETED" };

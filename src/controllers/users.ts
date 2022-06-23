@@ -125,7 +125,8 @@ export const getAllUsers = async (_req: any, _res: any) => {
             };
         }
         const count = await Users.find(query).count();
-        const result = await Users.find(query).skip(payload.skip).limit(payload.limit).select("-__v");
+        const result = await Users.find(query).skip(payload.skip).limit(payload.limit)
+                        .select("firstname lastname username email profilePic");
         if (!result || !result.length) {
             return _res.status(204).json({
                 message: "No Data Found!",

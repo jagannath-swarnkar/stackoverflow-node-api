@@ -4,8 +4,8 @@ import { addNewAnswer, addNewQuestion, getAllQuestions, getQuestionById, voteQue
 const router = express.Router();
 
 router.post("/", [AuthGuard], addNewQuestion);
-router.get("/", [AuthGuard], getAllQuestions);
-router.get("/:id", [AuthGuard], getQuestionById);
+router.get("/", getAllQuestions);
+router.get("/:id", getQuestionById);
 router.post("/:id", [AuthGuard], addNewAnswer);
 router.post("/vote/:id", [AuthGuard], voteQuestion);
 

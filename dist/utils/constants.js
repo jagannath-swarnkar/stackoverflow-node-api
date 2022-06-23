@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.slotTiming = void 0;
+exports.BlogStatus = exports.slotTiming = void 0;
 exports.slotTiming = {
     "1": "9AM - 10AM",
     "2": "10AM - 11AM",
@@ -15,4 +15,5 @@ exports.slotTiming = {
     "11": "7PM - 8PM",
     "12": "8PM - 9PM",
 };
+exports.BlogStatus = { ACTIVE: "ACTIVE", PENDING: "PENDING", REJECTED: "REJECTED", DELETED: "DELETED" };
 //# sourceMappingURL=constants.js.map
