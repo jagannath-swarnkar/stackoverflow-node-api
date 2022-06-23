@@ -240,3 +240,29 @@ export const likeDislikeBlog = async (_req: any, _res: any) => {
         });
     }
 };
+
+export const getBlogCategories = (_req: any, _res: any) => {
+    const result = [
+        { label: "Books", value: "Books" },
+        { label: "Travel", value: "Travel" },
+        { label: "Culture", value: "Culture" },
+        { label: "Self", value: "Self" },
+        { label: "Lifestyle", value: "Books" },
+        { label: "Nature", value: "Nature" },
+        { label: "Technology", value: "Technology" },
+        { label: "Business", value: "Business" },
+        { label: "Food", value: "Food" },
+        { label: "Fashion", value: "Fashion" },
+    ];
+    try {
+        return _res.status(200).send({
+            message: "success!",
+            data: result,
+        });
+    } catch (error) {
+        console.error("console error: ", error);
+        return _res.status(500).send({
+            message: error.message || "Internal Server Error!",
+        });
+    }
+};

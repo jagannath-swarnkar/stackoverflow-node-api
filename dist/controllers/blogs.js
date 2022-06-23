@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.likeDislikeBlog = exports.updateBlog = exports.deleteBlog = exports.getBlogDetails = exports.getLatestBlogs = exports.addNewBlog = void 0;
+exports.getBlogCategories = exports.likeDislikeBlog = exports.updateBlog = exports.deleteBlog = exports.getBlogDetails = exports.getLatestBlogs = exports.addNewBlog = void 0;
 const joi_1 = __importDefault(require("joi"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const Blogs_1 = __importDefault(require("../models/Blogs"));
@@ -226,4 +226,31 @@ const likeDislikeBlog = (_req, _res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.likeDislikeBlog = likeDislikeBlog;
+const getBlogCategories = (_req, _res) => {
+    const result = [
+        { label: "Books", value: "Books" },
+        { label: "Travel", value: "Travel" },
+        { label: "Culture", value: "Culture" },
+        { label: "Self", value: "Self" },
+        { label: "Lifestyle", value: "Books" },
+        { label: "Nature", value: "Nature" },
+        { label: "Technology", value: "Technology" },
+        { label: "Business", value: "Business" },
+        { label: "Food", value: "Food" },
+        { label: "Fashion", value: "Fashion" },
+    ];
+    try {
+        return _res.status(200).send({
+            message: "success!",
+            data: result,
+        });
+    }
+    catch (error) {
+        console.error("console error: ", error);
+        return _res.status(500).send({
+            message: error.message || "Internal Server Error!",
+        });
+    }
+};
+exports.getBlogCategories = getBlogCategories;
 //# sourceMappingURL=blogs.js.map

@@ -1,6 +1,6 @@
 import express from "express";
 import { AuthGuard } from "../middlewares/AuthGuard";
-import { addNewBlog, deleteBlog, getBlogDetails, getLatestBlogs, likeDislikeBlog, updateBlog } from "../controllers/blogs";
+import { addNewBlog, deleteBlog, getBlogCategories, getBlogDetails, getLatestBlogs, likeDislikeBlog, updateBlog } from "../controllers/blogs";
 const router = express.Router();
 
 router.post("/", [AuthGuard], addNewBlog);

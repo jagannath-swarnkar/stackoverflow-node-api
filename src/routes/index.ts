@@ -8,6 +8,7 @@ import LoginRoute from './login';
 import QuestionRoute from './question.route';
 import AnswerRoute from './answer.route';
 import BlogRoute from './blogs.route';
+import { getBlogCategories } from '../controllers/blogs';
 
 // router.use("/email", EmailService);
 router.use("/users", UserRoute);
@@ -17,5 +18,7 @@ router.use("/booking", BookingRoute)
 router.use("/questions", QuestionRoute)
 router.use("/answer", AnswerRoute)
 router.use("/blogs", BlogRoute)
+
+router.get("/categories", getBlogCategories)
 
 export default router;
