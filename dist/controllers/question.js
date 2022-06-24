@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.voteQuestion = exports.addNewAnswer = exports.getQuestionById = exports.getAllQuestions = exports.addNewQuestion = void 0;
+exports.quickSearch = exports.searchQuestion = exports.voteQuestion = exports.addNewAnswer = exports.getQuestionById = exports.getAllQuestions = exports.addNewQuestion = void 0;
 const joi_1 = __importDefault(require("joi"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const Questions_1 = __importDefault(require("../models/Questions"));
@@ -229,4 +229,86 @@ const voteQuestion = (_req, _res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.voteQuestion = voteQuestion;
+const searchQuestion = (_req, _res) => __awaiter(void 0, void 0, void 0, function* () {
+    let payload = {};
+    const schema = joi_1.default.object({
+        limit: joi_1.default.number().default(20).optional(),
+        skip: joi_1.default.number().default(0).optional(),
+        search: joi_1.default.string().optional()
+    });
+    const schemaObj = schema.validate(_req.query);
+    if (schemaObj.error) {
+        return _res.status(400).json({
+            message: schemaObj.error.message || "Bad Request",
+        });
+    }
+    else {
+        payload = schemaObj.value;
+    }
+    try {
+        let query = {};
+        if (payload.search) {
+            query = Object.assign(Object.assign({}, query), { $or: [{ title: { $regex: payload.search } }, { body: { $regex: payload.search } }, { tags: { $regex: payload.search } }] });
+        }
+        const result = yield Questions_1.default.find(query).skip(payload.skip).limit(payload.limit)
+            .select("title body createdAt tags votes questionBy");
+        if (!result || !result.length) {
+            return _res.status(204).json({
+                message: "No Data Found!",
+            });
+        }
+        return _res.status(200).json({
+            message: "success!",
+            data: result,
+        });
+    }
+    catch (error) {
+        console.error("console error: ", error);
+        return _res.status(500).send({
+            message: error.message || "Internal Server Error!",
+        });
+    }
+});
+exports.searchQuestion = searchQuestion;
+const quickSearch = (_req, _res) => __awaiter(void 0, void 0, void 0, function* () {
+    let payload = {};
+    const schema = joi_1.default.object({
+        limit: joi_1.default.number().default(20).optional(),
+        skip: joi_1.default.number().default(0).optional(),
+        search: joi_1.default.string().optional()
+    });
+    const schemaObj = schema.validate(_req.query);
+    if (schemaObj.error) {
+        return _res.status(400).json({
+            message: schemaObj.error.message || "Bad Request",
+        });
+    }
+    else {
+        payload = schemaObj.value;
+    }
+    try {
+        let query = {};
+        if (payload.search) {
+            query = Object.assign(Object.assign({}, query), { $or: [{ title: { $regex: payload.search } }, { body: { $regex: payload.search } }, { tags: { $regex: payload.search } }] });
+        }
+        const result = yield Questions_1.default.find(query).skip(payload.skip).limit(payload.limit)
+            .select("title");
+        if (!result || !result.length) {
+            return _res.status(204).json({
+                message: "No Data Found!",
+            });
+        }
+        return _res.status(200).json({
+            message: "success!",
+            data: result,
+        });
+    }
+    catch (error) {
+        console.error("console error: ", error);
+        return _res.status(500).send({
+            message: error.message || "Internal Server Error!",
+        });
+    }
+});
+exports.quickSearch = quickSearch;
 //# sourceMappingURL=question.js.map

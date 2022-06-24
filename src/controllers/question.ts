@@ -267,3 +267,93 @@ export const voteQuestion = async(_req: any, _res: any) => {
         });
     }
 };
+
+export const searchQuestion = async (_req: any, _res: any) => {
+    let payload: any = {};
+    const schema = Joi.object({
+        limit: Joi.number().default(20).optional(),
+        skip: Joi.number().default(0).optional(),
+        search: Joi.string().optional()
+    });
+
+    const schemaObj = schema.validate(_req.query);
+    if (schemaObj.error) {
+        return _res.status(400).json({
+            message: schemaObj.error.message || "Bad Request",
+        });
+    } else {
+        payload = schemaObj.value;
+    }
+
+    try {
+        let query: any = {
+        };
+        if (payload.search) {
+            query = {
+                ...query,
+                $or: [{ title: { $regex: payload.search } }, { body: { $regex: payload.search } }, { tags: { $regex: payload.search } }],
+            };
+        }
+        const result = await Questions.find(query).skip(payload.skip).limit(payload.limit)
+                        .select("title body createdAt tags votes questionBy");
+        if (!result || !result.length) {
+            return _res.status(204).json({
+                message: "No Data Found!",
+            });
+        }
+        return _res.status(200).json({
+            message: "success!",
+            data: result,
+        });
+    } catch (error) {
+        console.error("console error: ", error);
+        return _res.status(500).send({
+            message: error.message || "Internal Server Error!",
+        });
+    }
+};
+
+export const quickSearch = async (_req: any, _res: any) => {
+    let payload: any = {};
+    const schema = Joi.object({
+        limit: Joi.number().default(20).optional(),
+        skip: Joi.number().default(0).optional(),
+        search: Joi.string().optional()
+    });
+
+    const schemaObj = schema.validate(_req.query);
+    if (schemaObj.error) {
+        return _res.status(400).json({
+            message: schemaObj.error.message || "Bad Request",
+        });
+    } else {
+        payload = schemaObj.value;
+    }
+
+    try {
+        let query: any = {
+        };
+        if (payload.search) {
+            query = {
+                ...query,
+                $or: [{ title: { $regex: payload.search } }, { body: { $regex: payload.search } }, { tags: { $regex: payload.search } }],
+            };
+        }
+        const result = await Questions.find(query).skip(payload.skip).limit(payload.limit)
+                        .select("title");
+        if (!result || !result.length) {
+            return _res.status(204).json({
+                message: "No Data Found!",
+            });
+        }
+        return _res.status(200).json({
+            message: "success!",
+            data: result,
+        });
+    } catch (error) {
+        console.error("console error: ", error);
+        return _res.status(500).send({
+            message: error.message || "Internal Server Error!",
+        });
+    }
+};

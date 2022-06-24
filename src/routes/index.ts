@@ -9,6 +9,8 @@ import QuestionRoute from './question.route';
 import AnswerRoute from './answer.route';
 import BlogRoute from './blogs.route';
 import { getBlogCategories } from '../controllers/blogs';
+import { searchQuestion } from '../controllers/question';
+import { quickSearch } from '../controllers/question';
 
 // router.use("/email", EmailService);
 router.use("/users", UserRoute);
@@ -20,5 +22,6 @@ router.use("/answer", AnswerRoute)
 router.use("/blogs", BlogRoute)
 
 router.get("/categories", getBlogCategories)
-
+router.get("/search", searchQuestion)
+router.get("/quickSearch", quickSearch)
 export default router;
